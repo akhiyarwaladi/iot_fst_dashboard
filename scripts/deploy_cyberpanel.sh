@@ -4,14 +4,14 @@ set -euo pipefail
 # === Configure me ===
 # Absolute path to your domain home created by CyberPanel (no trailing slash).
 # Example: /home/example.com
-DOMAIN_HOME="/home/CHANGE_ME_DOMAIN"
+DOMAIN_HOME="/home/iot.fst.unja.ac.id"
 
 # App directory (Laravel project root) and Web root (public_html)
 APP_DIR="${DOMAIN_HOME}/iot_fst_dashboard"
 WEB_ROOT="${DOMAIN_HOME}/public_html"
 
 # Optional: site URL (used to set APP_URL if provided)
-APP_URL=""
+APP_URL="https://iot.fst.unja.ac.id"
 
 # Optional: set to user:group owner of the site (as shown by 'stat -c %U:%G').
 # Leave empty to skip chown.
