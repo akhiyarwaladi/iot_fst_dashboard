@@ -316,40 +316,19 @@ return [
             'text' => 'search',
         ],
         
-        // Electronic Component Tester Section
-        ['header' => 'COMPONENT TESTING'],
+        // Main Menu
         [
-            'text' => 'Dashboard',
+            'text' => 'Component Tester',
             'url' => 'admin/dashboard',
-            'icon' => 'fas fa-fw fa-tachometer-alt',
-        ],
-        [
-            'text' => 'Test Logs',
-            'url' => 'admin/logs',
-            'icon' => 'fas fa-fw fa-list-alt',
-        ],
-        [
-            'text' => 'Component Library',
-            'url' => 'admin/components',
             'icon' => 'fas fa-fw fa-microchip',
         ],
-        [
-            'text' => 'Test Reports',
-            'url' => 'admin/reports',
-            'icon' => 'fas fa-fw fa-chart-bar',
-        ],
         
-        // IoT Devices Section
-        ['header' => 'IOT DEVICES'],
+        // IoT Devices
+        ['header' => 'OTHER IOT DEVICES'],
         [
-            'text' => 'Device Management',
+            'text' => 'Other Devices',
             'icon' => 'fas fa-fw fa-wifi',
             'submenu' => [
-                [
-                    'text' => 'Electronic Component Tester',
-                    'url' => 'admin/dashboard',
-                    'icon' => 'fas fa-fw fa-microchip',
-                ],
                 [
                     'text' => 'Temperature Sensors',
                     'url' => 'admin/temperature',
@@ -360,23 +339,13 @@ return [
                     'url' => 'admin/switches',
                     'icon' => 'fas fa-fw fa-toggle-on',
                 ],
-                [
-                    'text' => 'Environmental Monitors',
-                    'url' => 'admin/environmental',
-                    'icon' => 'fas fa-fw fa-leaf',
-                ],
             ],
         ],
-        [
-            'text' => 'Network Status',
-            'url' => 'admin/network',
-            'icon' => 'fas fa-fw fa-network-wired',
-        ],
         
-        // System Section
+        // System
         ['header' => 'SYSTEM'],
         [
-            'text' => 'API Documentation',
+            'text' => 'API Docs',
             'url' => 'admin/api-docs',
             'icon' => 'fas fa-fw fa-code',
         ],

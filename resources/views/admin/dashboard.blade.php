@@ -134,11 +134,11 @@
                                     @endif
                                 </td>
                                 <td>
+                                    <button class="btn btn-sm btn-warning" onclick="editLog({{ $log->id }})">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
                                     <button class="btn btn-sm btn-danger" onclick="testDelete({{ $log->id }})">
                                         <i class="fas fa-trash"></i> Delete
-                                    </button>
-                                    <button class="btn btn-sm btn-info" onclick="alert('JavaScript works! ID: {{ $log->id }}')">
-                                        <i class="fas fa-info"></i> Test
                                     </button>
                                 </td>
                             </tr>
@@ -396,6 +396,93 @@
         // Refresh logs function
         function refreshLogs() {
             location.reload();
+        }
+        
+        // Edit log function
+        window.editLog = async function(id) {
+            try {
+                // Get current log data
+                const response = await fetch(`/api/logs/${id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                });
+                
+                if (response.ok) {
+                    const log = await response.json();
+                    
+                    // Show edit dialog with SweetAlert
+                    const { value: formValues } = await Swal.fire({
+                        title: 'Edit Test Log',
+                        html: `
+                            <div class="form-group">
+                                <label for="edit-komponen">Component:</label>
+                                <input id="edit-komponen" class="form-control" value="${log.komponen_terdeteksi}">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-status">Status:</label>
+                                <select id="edit-status" class="form-control">
+                                    <option value="OK" ${log.status === 'OK' ? 'selected' : ''}>OK</option>
+                                    <option value="FAILED" ${log.status === 'FAILED' ? 'selected' : ''}>FAILED</option>
+                                    <option value="WARNING" ${log.status === 'WARNING' ? 'selected' : ''}>WARNING</option>
+                                </select>
+                            </div>
+                        `,
+                        focusConfirm: false,
+                        preConfirm: () => {
+                            return [
+                                document.getElementById('edit-komponen').value,
+                                document.getElementById('edit-status').value
+                            ]
+                        }
+                    });
+                    
+                    if (formValues) {
+                        // Update log via API
+                        const updateResponse = await fetch(`/api/logs/${id}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                komponen_terdeteksi: formValues[0],
+                                status: formValues[1]
+                            })
+                        });
+                        
+                        if (updateResponse.ok) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Updated!',
+                                text: 'Log has been updated.',
+                                timer: 1500
+                            });
+                            setTimeout(() => location.reload(), 1600);
+                        } else {
+                            const errorData = await updateResponse.json();
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: errorData.message || 'Error updating log'
+                            });
+                        }
+                    }
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Could not load log data'
+                    });
+                }
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Network error: ' + error.message
+                });
+            }
         }
     </script>
 @stop
