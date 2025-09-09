@@ -357,26 +357,45 @@ code {
 
 /* API Endpoints Styling */
 .api-endpoints .endpoint-item {
-    padding: 0.75rem;
-    background: rgba(0, 0, 0, 0.02);
-    border-radius: 6px;
+    padding: 1rem;
+    background: linear-gradient(135deg, rgba(248, 249, 250, 0.8) 0%, rgba(233, 236, 239, 0.4) 100%);
+    border-radius: 8px;
     transition: var(--transition);
+    border-left: 4px solid transparent;
+    margin-bottom: 0.5rem;
 }
 
 .api-endpoints .endpoint-item:hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: linear-gradient(135deg, rgba(248, 249, 250, 1) 0%, rgba(233, 236, 239, 0.6) 100%);
+    transform: translateX(2px);
+    border-left-color: var(--primary-color);
 }
 
 .api-endpoints .badge {
-    min-width: 60px;
+    min-width: 65px;
     text-align: center;
     font-weight: 600;
+    font-size: 0.7rem;
+    padding: 0.35rem 0.6rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin-right: 0.75rem;
 }
 
+.api-endpoints .badge.bg-primary { background-color: #0d6efd !important; }
+.api-endpoints .badge.bg-success { background-color: #20c997 !important; }
+.api-endpoints .badge.bg-info { background-color: #0dcaf0 !important; }
+.api-endpoints .badge.bg-warning { background-color: #ffc107 !important; color: #212529 !important; }
+.api-endpoints .badge.bg-danger { background-color: #dc3545 !important; }
+.api-endpoints .badge.bg-secondary { background-color: #6c757d !important; }
+
 .api-endpoints code {
-    background: transparent;
+    background: rgba(13, 110, 253, 0.1);
     font-weight: 600;
-    color: var(--dark-color);
+    color: var(--primary-color);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
 }
 
 /* Progress bars in info boxes */
@@ -474,6 +493,26 @@ code {
 /* Empty state styling */
 .text-center .fa-flask {
     opacity: 0.3;
+    transition: var(--transition);
+}
+
+.text-center:hover .fa-flask {
+    opacity: 0.5;
+    transform: scale(1.1);
+}
+
+/* Enhanced empty state container */
+.empty-state {
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, rgba(248, 249, 250, 0.8) 0%, rgba(233, 236, 239, 0.3) 100%);
+    border-radius: var(--border-radius);
+    border: 2px dashed #dee2e6;
+    transition: var(--transition);
+}
+
+.empty-state:hover {
+    border-color: var(--primary-color);
+    background: linear-gradient(135deg, rgba(13, 110, 253, 0.05) 0%, rgba(248, 249, 250, 0.8) 100%);
 }
 
 /* SweetAlert2 custom styling */
@@ -489,4 +528,81 @@ code {
 .swal2-confirm {
     border-radius: 6px !important;
     font-weight: 500 !important;
+}
+
+/* Additional modern enhancements */
+/* Card tools styling */
+.card-tools .badge {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+}
+
+/* Content header improvements */
+.content-header h1 {
+    font-weight: 700;
+    color: var(--dark-color);
+    font-size: 2rem;
+}
+
+.content-header p {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+/* Table responsive enhancements */
+.table-responsive {
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+}
+
+/* Button group improvements */
+.btn-group .btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+}
+
+/* Status indicator improvements */
+.text-success i.fas.fa-circle {
+    animation: pulse 2s infinite;
+}
+
+.text-info i.fas.fa-circle {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Form enhancements */
+.form-group label {
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+/* Stats card number animation */
+.small-box .inner h3 {
+    background: linear-gradient(45deg, currentColor, currentColor);
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+/* DataTable improvements */
+.dataTables_wrapper .dataTables_info {
+    color: var(--secondary-color);
+    font-weight: 500;
+}
+
+.dataTables_wrapper .dataTables_length label,
+.dataTables_wrapper .dataTables_filter label {
+    color: var(--dark-color);
+    font-weight: 500;
 }

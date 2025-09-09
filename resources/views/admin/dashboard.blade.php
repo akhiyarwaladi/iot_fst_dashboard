@@ -174,10 +174,16 @@
                     </table>
                     </div>
                     @else
-                    <div class="text-center py-4">
-                        <i class="fas fa-flask fa-3x text-muted mb-3"></i>
-                        <h4 class="text-muted">No Test Results Yet</h4>
-                        <p class="text-muted">Start by adding your first component test above.</p>
+                    <div class="text-center empty-state">
+                        <i class="fas fa-flask fa-4x text-muted mb-4"></i>
+                        <h4 class="text-muted mb-2">No Test Results Yet</h4>
+                        <p class="text-muted mb-3">Start by adding your first component test above to begin monitoring your IoT devices.</p>
+                        <div class="mt-3">
+                            <small class="text-muted">
+                                <i class="fas fa-lightbulb mr-1"></i>
+                                Tip: Use the form above or send data via API endpoints
+                            </small>
+                        </div>
                     </div>
                     @endif
                 </div>
@@ -201,41 +207,44 @@
                 <div class="card-body">
                     <p class="text-muted mb-3">RESTful API for IoT device integration and remote testing:</p>
                     <div class="api-endpoints">
-                        <div class="endpoint-item mb-2">
-                            <span class="badge bg-primary me-2">GET</span>
+                        <div class="endpoint-item">
+                            <span class="badge bg-primary">GET</span>
                             <code>/api/logs</code>
-                            <small class="text-muted d-block">Retrieve all test results</small>
-                        </div>
-                        <div class="endpoint-item mb-2">
-                            <span class="badge bg-success me-2">POST</span>
-                            <code>/api/logs</code>
-                            <small class="text-muted d-block">Submit new test result</small>
-                        </div>
-                        <div class="endpoint-item mb-2">
-                            <span class="badge bg-info me-2">GET</span>
-                            <code>/api/logs/{id}</code>
-                            <small class="text-muted d-block">Get specific test result</small>
-                        </div>
-                        <div class="endpoint-item mb-2">
-                            <span class="badge bg-warning me-2">PUT</span>
-                            <code>/api/logs/{id}</code>
-                            <small class="text-muted d-block">Update test result</small>
-                        </div>
-                        <div class="endpoint-item mb-2">
-                            <span class="badge bg-danger me-2">DELETE</span>
-                            <code>/api/logs/{id}</code>
-                            <small class="text-muted d-block">Remove test result</small>
+                            <small class="text-muted d-block mt-1">Retrieve all test results with pagination</small>
                         </div>
                         <div class="endpoint-item">
-                            <span class="badge bg-secondary me-2">GET</span>
+                            <span class="badge bg-success">POST</span>
+                            <code>/api/logs</code>
+                            <small class="text-muted d-block mt-1">Submit new component test result</small>
+                        </div>
+                        <div class="endpoint-item">
+                            <span class="badge bg-info">GET</span>
+                            <code>/api/logs/{id}</code>
+                            <small class="text-muted d-block mt-1">Get specific test result by ID</small>
+                        </div>
+                        <div class="endpoint-item">
+                            <span class="badge bg-warning">PUT</span>
+                            <code>/api/logs/{id}</code>
+                            <small class="text-muted d-block mt-1">Update existing test result</small>
+                        </div>
+                        <div class="endpoint-item">
+                            <span class="badge bg-danger">DELETE</span>
+                            <code>/api/logs/{id}</code>
+                            <small class="text-muted d-block mt-1">Remove test result permanently</small>
+                        </div>
+                        <div class="endpoint-item">
+                            <span class="badge bg-secondary">GET</span>
                             <code>/api/logs/status/{status}</code>
-                            <small class="text-muted d-block">Filter by test status</small>
+                            <small class="text-muted d-block mt-1">Filter results by status (OK, FAILED, WARNING)</small>
                         </div>
                     </div>
                     <hr>
                     <div class="text-center">
-                        <a href="/api-docs" class="btn btn-outline-primary btn-sm">
+                        <a href="{{ asset('docs/API_DOCUMENTATION.md') }}" target="_blank" class="btn btn-outline-primary btn-sm">
                             <i class="fas fa-book mr-1"></i> View Full Documentation
+                        </a>
+                        <a href="https://github.com/akhiyarwaladi/iot_fst_dashboard" target="_blank" class="btn btn-outline-secondary btn-sm ml-2">
+                            <i class="fab fa-github mr-1"></i> GitHub Repository
                         </a>
                     </div>
                 </div>
