@@ -240,9 +240,9 @@
                     </div>
                     <hr>
                     <div class="text-center">
-                        <a href="{{ asset('docs/API_DOCUMENTATION.md') }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                        <button onclick="window.open('{{ url('/') }}/docs/API_DOCUMENTATION.md', '_blank')" class="btn btn-outline-primary btn-sm">
                             <i class="fas fa-book mr-1"></i> View Full Documentation
-                        </a>
+                        </button>
                         <a href="https://github.com/akhiyarwaladi/iot_fst_dashboard" target="_blank" class="btn btn-outline-secondary btn-sm ml-2">
                             <i class="fab fa-github mr-1"></i> GitHub Repository
                         </a>
@@ -385,30 +385,45 @@
                 });
                 
                 if (response.ok) {
-                    // Show success message
+                    // Show success message with standardized styling
                     Swal.fire({
                         icon: 'success',
-                        title: 'Success!',
-                        text: 'Log added successfully!',
-                        timer: 1500
+                        title: 'Test Added Successfully!',
+                        text: 'Your component test result has been saved to the database.',
+                        timer: 2500,
+                        showConfirmButton: false,
+                        customClass: {
+                            popup: 'success-notification'
+                        },
+                        toast: false,
+                        position: 'center'
                     });
                     
                     // Reset form and reload page
                     document.getElementById('addLogForm').reset();
-                    setTimeout(() => location.reload(), 1600);
+                    setTimeout(() => location.reload(), 2600);
                 } else {
                     const errorData = await response.json();
                     Swal.fire({
                         icon: 'error',
-                        title: 'Error!',
-                        text: errorData.message || 'Error adding log'
+                        title: 'Failed to Add Test',
+                        text: errorData.message || 'There was an error saving your test result. Please try again.',
+                        confirmButtonText: 'Try Again',
+                        customClass: {
+                            popup: 'error-notification'
+                        }
                     });
                 }
             } catch (error) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error!',
-                    text: 'Network error: ' + error.message
+                    title: 'Network Connection Error',
+                    text: 'Unable to connect to the server. Please check your internet connection and try again.',
+                    footer: `<small>Technical error: ${error.message}</small>`,
+                    confirmButtonText: 'Retry',
+                    customClass: {
+                        popup: 'error-notification'
+                    }
                 });
             }
         });
@@ -428,13 +443,25 @@
             
             console.log('Using SweetAlert2');
             const result = await Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                title: 'Delete Test Result?',
+                html: `
+                    <div class="text-left">
+                        <p>Are you sure you want to permanently delete this test result?</p>
+                        <div class="alert alert-warning mt-3" style="background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 0.75rem; border-radius: 6px;">
+                            <i class="fas fa-exclamation-triangle text-warning"></i>
+                            <strong>Warning:</strong> This action cannot be undone.
+                        </div>
+                    </div>
+                `,
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: '<i class="fas fa-trash-alt mr-1"></i> Delete Permanently',
+                cancelButtonText: '<i class="fas fa-times mr-1"></i> Keep Result',
+                customClass: {
+                    popup: 'delete-confirmation'
+                },
+                buttonsStyling: false,
+                focusCancel: true
             });
             
             if (result.isConfirmed) {
@@ -470,11 +497,15 @@
                     if (typeof Swal !== 'undefined') {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Deleted!',
-                            text: 'Log has been deleted.',
-                            timer: 1500
+                            title: 'Test Result Deleted',
+                            text: 'The test result has been permanently removed from the database.',
+                            timer: 2500,
+                            showConfirmButton: false,
+                            customClass: {
+                                popup: 'success-notification'
+                            }
                         });
-                        setTimeout(() => location.reload(), 1600);
+                        setTimeout(() => location.reload(), 2600);
                     } else {
                         alert('Log deleted successfully!');
                         location.reload();
@@ -484,8 +515,12 @@
                     if (typeof Swal !== 'undefined') {
                         Swal.fire({
                             icon: 'error',
-                            title: 'Error!',
-                            text: data.message || 'Error deleting log'
+                            title: 'Failed to Delete',
+                            text: data.message || 'There was an error deleting the test result. It may have already been removed.',
+                            confirmButtonText: 'Close',
+                            customClass: {
+                                popup: 'error-notification'
+                            }
                         });
                     } else {
                         alert('Error: ' + (data.message || 'Error deleting log'));
@@ -555,25 +590,74 @@
                     const log = await response.json();
                     
                     Swal.fire({
-                        title: 'Test Result Details',
+                        title: '<i class="fas fa-info-circle mr-2"></i>Test Result Details',
                         html: `
-                            <div class="text-left">
-                                <p><strong>Test ID:</strong> #${log.id}</p>
-                                <p><strong>Component:</strong> ${log.komponen_terdeteksi}</p>
-                                <p><strong>Test Status:</strong> 
-                                    <span class="badge ${log.status === 'OK' ? 'badge-success' : log.status === 'FAILED' ? 'badge-danger' : 'badge-warning'}">
-                                        ${log.status}
-                                    </span>
-                                </p>
-                                <p><strong>Test Date:</strong> ${new Date(log.tanggal_uji).toLocaleString()}</p>
-                                <p><strong>Created:</strong> ${new Date(log.created_at).toLocaleString()}</p>
-                                ${log.updated_at !== log.created_at ? `<p><strong>Last Modified:</strong> ${new Date(log.updated_at).toLocaleString()}</p>` : ''}
+                            <div class="text-left" style="margin-top: 1rem;">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card" style="border: none; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                                            <div class="card-body" style="padding: 1.5rem;">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <h6 class="text-muted mb-1">
+                                                            <i class="fas fa-hashtag mr-1"></i>Test ID
+                                                        </h6>
+                                                        <p class="h5 text-primary">#${log.id}</p>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <h6 class="text-muted mb-1">
+                                                            <i class="fas fa-clipboard-check mr-1"></i>Status
+                                                        </h6>
+                                                        <span class="badge ${log.status === 'OK' ? 'badge-success' : log.status === 'FAILED' ? 'badge-danger' : 'badge-warning'}" 
+                                                              style="font-size: 0.9rem; padding: 0.5rem 1rem;">
+                                                            ${log.status === 'OK' ? '✓ PASSED' : log.status === 'FAILED' ? '✗ FAILED' : '⚠ WARNING'}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <hr style="margin: 1rem 0;">
+                                                
+                                                <h6 class="text-muted mb-2">
+                                                    <i class="fas fa-microchip mr-1"></i>Component Information
+                                                </h6>
+                                                <p class="h6 mb-3">${log.komponen_terdeteksi}</p>
+                                                
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <h6 class="text-muted mb-1">
+                                                            <i class="fas fa-calendar-alt mr-1"></i>Test Date
+                                                        </h6>
+                                                        <p class="mb-2"><small>${new Date(log.tanggal_uji).toLocaleString()}</small></p>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <h6 class="text-muted mb-1">
+                                                            <i class="fas fa-clock mr-1"></i>Created
+                                                        </h6>
+                                                        <p class="mb-2"><small>${new Date(log.created_at).toLocaleString()}</small></p>
+                                                    </div>
+                                                </div>
+                                                
+                                                ${log.updated_at !== log.created_at ? `
+                                                <div class="mt-2">
+                                                    <h6 class="text-muted mb-1">
+                                                        <i class="fas fa-edit mr-1"></i>Last Modified
+                                                    </h6>
+                                                    <p class="mb-0"><small>${new Date(log.updated_at).toLocaleString()}</small></p>
+                                                </div>
+                                                ` : ''}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         `,
-                        width: 600,
+                        width: 650,
                         showConfirmButton: true,
-                        confirmButtonText: 'Close',
-                        confirmButtonColor: '#6c757d'
+                        confirmButtonText: '<i class="fas fa-times mr-1"></i> Close',
+                        customClass: {
+                            popup: 'view-details-modal'
+                        },
+                        buttonsStyling: false
                     });
                 } else {
                     Swal.fire({
@@ -585,8 +669,13 @@
             } catch (error) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error!',
-                    text: 'Network error: ' + error.message
+                    title: 'Network Connection Error',
+                    text: 'Unable to connect to the server. Please check your internet connection and try again.',
+                    footer: `<small>Technical error: ${error.message}</small>`,
+                    confirmButtonText: 'Retry',
+                    customClass: {
+                        popup: 'error-notification'
+                    }
                 });
             }
         }
@@ -607,27 +696,60 @@
                     
                     // Show edit dialog with SweetAlert
                     const { value: formValues } = await Swal.fire({
-                        title: 'Edit Test Log',
+                        title: '<i class="fas fa-edit mr-2"></i>Edit Test Result',
                         html: `
-                            <div class="form-group">
-                                <label for="edit-komponen">Component:</label>
-                                <input id="edit-komponen" class="form-control" value="${log.komponen_terdeteksi}">
-                            </div>
-                            <div class="form-group">
-                                <label for="edit-status">Status:</label>
-                                <select id="edit-status" class="form-control">
-                                    <option value="OK" ${log.status === 'OK' ? 'selected' : ''}>OK</option>
-                                    <option value="FAILED" ${log.status === 'FAILED' ? 'selected' : ''}>FAILED</option>
-                                    <option value="WARNING" ${log.status === 'WARNING' ? 'selected' : ''}>WARNING</option>
-                                </select>
+                            <div class="text-left" style="margin-top: 1rem;">
+                                <div class="form-group mb-3">
+                                    <label for="edit-komponen" class="form-label">
+                                        <i class="fas fa-microchip mr-1"></i>Component Name
+                                    </label>
+                                    <input id="edit-komponen" class="swal2-input" 
+                                           value="${log.komponen_terdeteksi}" 
+                                           placeholder="e.g., Resistor 10kΩ, LED Red"
+                                           style="width: 100%; margin: 0;">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="edit-status" class="form-label">
+                                        <i class="fas fa-clipboard-check mr-1"></i>Test Status
+                                    </label>
+                                    <select id="edit-status" class="swal2-select" style="width: 100%; margin: 0;">
+                                        <option value="OK" ${log.status === 'OK' ? 'selected' : ''}>✓ PASSED</option>
+                                        <option value="FAILED" ${log.status === 'FAILED' ? 'selected' : ''}>✗ FAILED</option>
+                                        <option value="WARNING" ${log.status === 'WARNING' ? 'selected' : ''}>⚠ WARNING</option>
+                                    </select>
+                                </div>
+                                <div class="mt-3" style="background-color: #f8f9fa; padding: 0.75rem; border-radius: 6px; border-left: 4px solid var(--info-color);">
+                                    <small class="text-muted">
+                                        <i class="fas fa-info-circle mr-1"></i>
+                                        <strong>Test ID:</strong> ${log.id} | 
+                                        <strong>Original Date:</strong> ${new Date(log.tanggal_uji).toLocaleString()}
+                                    </small>
+                                </div>
                             </div>
                         `,
+                        showCancelButton: true,
+                        confirmButtonText: '<i class="fas fa-save mr-1"></i> Save Changes',
+                        cancelButtonText: '<i class="fas fa-times mr-1"></i> Cancel',
+                        customClass: {
+                            popup: 'edit-modal'
+                        },
+                        buttonsStyling: false,
                         focusConfirm: false,
+                        allowOutsideClick: false,
                         preConfirm: () => {
-                            return [
-                                document.getElementById('edit-komponen').value,
-                                document.getElementById('edit-status').value
-                            ]
+                            const component = document.getElementById('edit-komponen').value.trim();
+                            const status = document.getElementById('edit-status').value;
+                            
+                            if (!component) {
+                                Swal.showValidationMessage('Component name is required');
+                                return false;
+                            }
+                            if (!status) {
+                                Swal.showValidationMessage('Please select a test status');
+                                return false;
+                            }
+                            
+                            return [component, status];
                         }
                     });
                     
@@ -648,17 +770,25 @@
                         if (updateResponse.ok) {
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Updated!',
-                                text: 'Log has been updated.',
-                                timer: 1500
+                                title: 'Test Result Updated',
+                                text: 'Your changes have been saved successfully.',
+                                timer: 2500,
+                                showConfirmButton: false,
+                                customClass: {
+                                    popup: 'success-notification'
+                                }
                             });
-                            setTimeout(() => location.reload(), 1600);
+                            setTimeout(() => location.reload(), 2600);
                         } else {
                             const errorData = await updateResponse.json();
                             Swal.fire({
                                 icon: 'error',
-                                title: 'Error!',
-                                text: errorData.message || 'Error updating log'
+                                title: 'Failed to Update',
+                                text: errorData.message || 'There was an error saving your changes. Please try again.',
+                                confirmButtonText: 'Try Again',
+                                customClass: {
+                                    popup: 'error-notification'
+                                }
                             });
                         }
                     }
@@ -672,8 +802,13 @@
             } catch (error) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error!',
-                    text: 'Network error: ' + error.message
+                    title: 'Network Connection Error',
+                    text: 'Unable to connect to the server. Please check your internet connection and try again.',
+                    footer: `<small>Technical error: ${error.message}</small>`,
+                    confirmButtonText: 'Retry',
+                    customClass: {
+                        popup: 'error-notification'
+                    }
                 });
             }
         }

@@ -515,19 +515,218 @@ code {
     background: linear-gradient(135deg, rgba(13, 110, 253, 0.05) 0%, rgba(248, 249, 250, 0.8) 100%);
 }
 
-/* SweetAlert2 custom styling */
+/* SweetAlert2 custom styling - Standardized Modals */
 .swal2-popup {
-    border-radius: var(--border-radius) !important;
-    font-family: inherit !important;
+    border-radius: 12px !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12) !important;
+    border: none !important;
+    padding: 2rem !important;
 }
 
 .swal2-title {
     color: var(--dark-color) !important;
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 1rem !important;
 }
 
+.swal2-content {
+    color: var(--secondary-color) !important;
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    margin: 0 0 2rem 0 !important;
+}
+
+.swal2-html-container {
+    margin: 0 0 2rem 0 !important;
+    color: var(--dark-color) !important;
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+}
+
+/* Button Styling */
 .swal2-confirm {
+    background-color: var(--primary-color) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    padding: 0.75rem 2rem !important;
+    font-size: 0.9rem !important;
+    transition: all 0.2s ease !important;
+    text-transform: none !important;
+    box-shadow: 0 2px 8px rgba(13, 110, 253, 0.3) !important;
+}
+
+.swal2-confirm:hover {
+    background-color: #0b5ed7 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4) !important;
+}
+
+.swal2-cancel {
+    background-color: transparent !important;
+    border: 2px solid var(--secondary-color) !important;
+    color: var(--secondary-color) !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    padding: 0.75rem 2rem !important;
+    font-size: 0.9rem !important;
+    transition: all 0.2s ease !important;
+    text-transform: none !important;
+    margin-right: 1rem !important;
+}
+
+.swal2-cancel:hover {
+    background-color: var(--secondary-color) !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3) !important;
+}
+
+/* Icon Styling */
+.swal2-icon {
+    margin: 1rem auto 1.5rem !important;
+}
+
+.swal2-icon.swal2-success {
+    color: var(--success-color) !important;
+}
+
+.swal2-icon.swal2-error {
+    color: var(--danger-color) !important;
+}
+
+.swal2-icon.swal2-warning {
+    color: var(--warning-color) !important;
+}
+
+.swal2-icon.swal2-info {
+    color: var(--info-color) !important;
+}
+
+/* Success Modal Specific */
+.swal2-popup.swal2-modal.swal2-icon-success {
+    border-top: 4px solid var(--success-color) !important;
+}
+
+/* Error Modal Specific */
+.swal2-popup.swal2-modal.swal2-icon-error {
+    border-top: 4px solid var(--danger-color) !important;
+}
+
+/* Warning Modal Specific */
+.swal2-popup.swal2-modal.swal2-icon-warning {
+    border-top: 4px solid var(--warning-color) !important;
+}
+
+/* Info Modal Specific */
+.swal2-popup.swal2-modal.swal2-icon-info {
+    border-top: 4px solid var(--info-color) !important;
+}
+
+/* Input field styling in modals */
+.swal2-input, .swal2-textarea, .swal2-select {
+    border: 2px solid #e9ecef !important;
+    border-radius: 8px !important;
+    padding: 0.75rem 1rem !important;
+    font-size: 0.9rem !important;
+    margin: 0.5rem 0 !important;
+    transition: border-color 0.2s ease !important;
+    font-family: inherit !important;
+}
+
+.swal2-input:focus, .swal2-textarea:focus, .swal2-select:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1) !important;
+    outline: none !important;
+}
+
+/* Form labels in modals */
+.swal2-label {
+    color: var(--dark-color) !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    margin-bottom: 0.5rem !important;
+    display: block !important;
+}
+
+/* Loading state */
+.swal2-loading .swal2-confirm {
+    background-color: var(--secondary-color) !important;
+}
+
+/* Footer styling */
+.swal2-footer {
+    border-top: 1px solid #e9ecef !important;
+    margin-top: 2rem !important;
+    padding-top: 1rem !important;
+}
+
+/* Custom classes for different modal types */
+.swal2-popup.delete-confirmation {
+    border-top: 4px solid var(--danger-color) !important;
+}
+
+.swal2-popup.edit-modal {
+    border-top: 4px solid var(--primary-color) !important;
+    max-width: 500px !important;
+}
+
+.swal2-popup.success-notification {
+    border-top: 4px solid var(--success-color) !important;
+}
+
+.swal2-popup.error-notification {
+    border-top: 4px solid var(--danger-color) !important;
+}
+
+.swal2-popup.view-details-modal {
+    border-top: 4px solid var(--info-color) !important;
+}
+
+/* Validation messages */
+.swal2-validation-message {
+    background-color: #ffeaa7 !important;
+    color: #2d3436 !important;
     border-radius: 6px !important;
+    padding: 0.75rem 1rem !important;
+    margin: 0.5rem 0 !important;
+    border: 1px solid #fdcb6e !important;
     font-weight: 500 !important;
+}
+
+/* Animation improvements */
+@keyframes swal2-show {
+    0% {
+        transform: scale(0.7) translate3d(0, 0, 0);
+        opacity: 0;
+    }
+    45% {
+        transform: scale(1.05) translate3d(0, 0, 0);
+        opacity: 1;
+    }
+    80% {
+        transform: scale(0.95) translate3d(0, 0, 0);
+    }
+    100% {
+        transform: scale(1) translate3d(0, 0, 0);
+    }
+}
+
+.swal2-popup.swal2-show {
+    animation: swal2-show 0.3s ease-out !important;
+}
+
+/* Custom button colors for delete confirmation */
+.delete-confirmation .swal2-confirm {
+    background-color: var(--danger-color) !important;
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3) !important;
+}
+
+.delete-confirmation .swal2-confirm:hover {
+    background-color: #c82333 !important;
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4) !important;
 }
 
 /* Additional modern enhancements */
