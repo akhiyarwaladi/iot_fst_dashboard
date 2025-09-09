@@ -103,7 +103,7 @@
             <div class="small-box bg-warning">
                 <div class="inner">
                     <h3 id="warningLogs">{{ number_format($logs->where('status', 'WARNING')->count()) }}</h3>
-                    <p>Components w/ Warning</p>
+                    <p>Components with Warning</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-exclamation-circle"></i>
@@ -436,39 +436,49 @@
             if (typeof Swal === 'undefined') {
                 console.log('SweetAlert2 not loaded, using confirm');
                 if (confirm('Are you sure you want to delete this log?')) {
-                    deleteLogRequest(id);
+                    await deleteLogRequest(id);
                 }
                 return;
             }
             
             console.log('Using SweetAlert2');
-            const result = await Swal.fire({
-                title: 'Delete Test Result?',
-                html: `
-                    <div class="text-left">
-                        <p>Are you sure you want to permanently delete this test result?</p>
-                        <div class="alert alert-warning mt-3" style="background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 0.75rem; border-radius: 6px;">
-                            <i class="fas fa-exclamation-triangle text-warning"></i>
-                            <strong>Warning:</strong> This action cannot be undone.
+            try {
+                const result = await Swal.fire({
+                    title: 'Delete Test Result?',
+                    html: `
+                        <div class="text-left">
+                            <p>Are you sure you want to permanently delete this test result?</p>
+                            <div class="alert alert-warning mt-3" style="background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 0.75rem; border-radius: 6px;">
+                                <i class="fas fa-exclamation-triangle text-warning"></i>
+                                <strong>Warning:</strong> This action cannot be undone.
+                            </div>
                         </div>
-                    </div>
-                `,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: '<i class="fas fa-trash-alt mr-1"></i> Delete Permanently',
-                cancelButtonText: '<i class="fas fa-times mr-1"></i> Keep Result',
-                customClass: {
-                    popup: 'delete-confirmation'
-                },
-                buttonsStyling: false,
-                focusCancel: true
-            });
-            
-            if (result.isConfirmed) {
-                console.log('User confirmed delete');
-                deleteLogRequest(id);
-            } else {
-                console.log('User cancelled delete');
+                    `,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: '<i class="fas fa-trash-alt mr-1"></i> Delete Permanently',
+                    cancelButtonText: '<i class="fas fa-times mr-1"></i> Keep Result',
+                    customClass: {
+                        popup: 'delete-confirmation'
+                    },
+                    buttonsStyling: false,
+                    focusCancel: true,
+                    allowOutsideClick: false,
+                    allowEscapeKey: true
+                });
+                
+                if (result.isConfirmed) {
+                    console.log('User confirmed delete');
+                    await deleteLogRequest(id);
+                } else {
+                    console.log('User cancelled delete');
+                }
+            } catch (error) {
+                console.error('Error in delete modal:', error);
+                // Fallback to simple confirm
+                if (confirm('Are you sure you want to delete this test result?')) {
+                    await deleteLogRequest(id);
+                }
             }
         }
         
@@ -531,8 +541,13 @@
                 if (typeof Swal !== 'undefined') {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Error!',
-                        text: 'Network error: ' + error.message
+                        title: 'Network Connection Error',
+                        text: 'Unable to connect to the server. Please check your internet connection and try again.',
+                        footer: `<small>Technical error: ${error.message}</small>`,
+                        confirmButtonText: 'Retry',
+                        customClass: {
+                            popup: 'error-notification'
+                        }
                     });
                 } else {
                     alert('Network error: ' + error.message);
