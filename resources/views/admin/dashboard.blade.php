@@ -160,7 +160,7 @@
                                         <button class="btn btn-sm btn-outline-primary" onclick="editLog({{ $log->id }})" title="Edit Test Result">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button class="btn btn-sm btn-outline-danger" onclick="testDelete({{ $log->id }})" title="Delete Test Result">
+                                        <button class="btn btn-sm btn-outline-danger" onclick="deleteLog({{ $log->id }})" title="Delete Test Result">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                         <button class="btn btn-sm btn-outline-info" onclick="viewDetails({{ $log->id }})" title="View Details">
@@ -540,36 +540,8 @@
             }
         }
         
-        // Simple test delete function
-        window.testDelete = function(id) {
-            console.log('Test delete called with ID:', id);
-            
-            if (confirm('Are you sure you want to delete this log?')) {
-                console.log('User confirmed, making DELETE request');
-                
-                fetch(`/api/logs/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(response => {
-                    console.log('Response status:', response.status);
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Response data:', data);
-                    alert('Log deleted successfully!');
-                    location.reload();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Error deleting log: ' + error.message);
-                });
-            } else {
-                console.log('User cancelled');
-            }
-        }
+        // Backward compatible alias to the styled delete modal
+        window.testDelete = function(id) { return window.deleteLog(id); }
         
         // Refresh logs function
         function refreshLogs() {
