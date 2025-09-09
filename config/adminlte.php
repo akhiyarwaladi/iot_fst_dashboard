@@ -318,11 +318,41 @@ return [
         
         // Main Menu
         [
-            'text' => 'Component Tester',
+            'text' => 'Dashboard',
             'url' => 'admin/dashboard',
-            'icon' => 'fas fa-fw fa-microchip',
+            'icon' => 'fas fa-fw fa-tachometer-alt',
         ],
         
+        // Component Testing
+        ['header' => 'COMPONENT TESTING'],
+        [
+            'text' => 'Test Logs',
+            'url' => 'admin/logs',
+            'icon' => 'fas fa-fw fa-list-alt',
+        ],
+        [
+            'text' => 'Components',
+            'url' => 'admin/components',
+            'icon' => 'fas fa-fw fa-microchip',
+        ],
+        [
+            'text' => 'Reports',
+            'url' => 'admin/reports',
+            'icon' => 'fas fa-fw fa-chart-bar',
+        ],
+        
+        // IoT Devices (Simple)
+        ['header' => 'IOT DEVICES'],
+        [
+            'text' => 'Temperature',
+            'url' => 'admin/temperature',
+            'icon' => 'fas fa-fw fa-thermometer-half',
+        ],
+        [
+            'text' => 'Smart Switches',
+            'url' => 'admin/switches',
+            'icon' => 'fas fa-fw fa-toggle-on',
+        ],
         
         // System
         ['header' => 'SYSTEM'],
