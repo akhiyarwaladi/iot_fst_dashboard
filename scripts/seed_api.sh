@@ -8,7 +8,7 @@ set -euo pipefail
 #   bash scripts/seed_api.sh                  # 20 rows to http://127.0.0.1:8000
 #   bash scripts/seed_api.sh http://host 50   # 50 rows to given host
 
-BASE_URL=${1:-http://127.0.0.1:8000}
+BASE_URL=${1:-http://iot.fst.unja.ac.id}
 COUNT=${2:-20}
 
 API="$BASE_URL/api"
