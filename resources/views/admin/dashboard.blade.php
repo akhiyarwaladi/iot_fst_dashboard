@@ -103,7 +103,7 @@
             <div class="small-box bg-warning">
                 <div class="inner">
                     <h3 id="warningLogs">{{ number_format($logs->where('status', 'WARNING')->count()) }}</h3>
-                    <p>Components with Warning</p>
+                    <p>Warning Components</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-exclamation-circle"></i>
@@ -387,16 +387,11 @@
                 if (response.ok) {
                     // Show success message with standardized styling
                     Swal.fire({
-                        icon: 'success',
+                        type: 'success',
                         title: 'Test Added Successfully!',
                         text: 'Your component test result has been saved to the database.',
                         timer: 2500,
-                        showConfirmButton: false,
-                        customClass: {
-                            popup: 'success-notification'
-                        },
-                        toast: false,
-                        position: 'center'
+                        showConfirmButton: false
                     });
                     
                     // Reset form and reload page
@@ -405,25 +400,18 @@
                 } else {
                     const errorData = await response.json();
                     Swal.fire({
-                        icon: 'error',
+                        type: 'error',
                         title: 'Failed to Add Test',
                         text: errorData.message || 'There was an error saving your test result. Please try again.',
-                        confirmButtonText: 'Try Again',
-                        customClass: {
-                            popup: 'error-notification'
-                        }
+                        confirmButtonText: 'Try Again'
                     });
                 }
             } catch (error) {
                 Swal.fire({
-                    icon: 'error',
+                    type: 'error',
                     title: 'Network Connection Error',
                     text: 'Unable to connect to the server. Please check your internet connection and try again.',
-                    footer: `<small>Technical error: ${error.message}</small>`,
-                    confirmButtonText: 'Retry',
-                    customClass: {
-                        popup: 'error-notification'
-                    }
+                    confirmButtonText: 'Retry'
                 });
             }
         });
@@ -432,43 +420,23 @@
         window.deleteLog = async function(id) {
             console.log('Delete function called with ID:', id);
             
-            // Check if Swal is loaded
-            if (typeof Swal === 'undefined') {
-                console.log('SweetAlert2 not loaded, using confirm');
-                if (confirm('Are you sure you want to delete this log?')) {
-                    await deleteLogRequest(id);
-                }
-                return;
-            }
-            
-            console.log('Using SweetAlert2');
             try {
                 const result = await Swal.fire({
                     title: 'Delete Test Result?',
-                    html: `
-                        <div class="text-left">
-                            <p>Are you sure you want to permanently delete this test result?</p>
-                            <div class="alert alert-warning mt-3" style="background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 0.75rem; border-radius: 6px;">
-                                <i class="fas fa-exclamation-triangle text-warning"></i>
-                                <strong>Warning:</strong> This action cannot be undone.
-                            </div>
-                        </div>
-                    `,
-                    icon: 'warning',
+                    text: 'Are you sure you want to permanently delete this test result? This action cannot be undone.',
+                    type: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: '<i class="fas fa-trash-alt mr-1"></i> Delete Permanently',
-                    cancelButtonText: '<i class="fas fa-times mr-1"></i> Keep Result',
-                    customClass: {
-                        popup: 'delete-confirmation'
-                    },
-                    buttonsStyling: false,
-                    focusCancel: true,
-                    allowOutsideClick: false,
-                    allowEscapeKey: true
+                    confirmButtonText: 'Delete Permanently',
+                    cancelButtonText: 'Cancel',
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    dangerMode: true
                 });
                 
-                if (result.isConfirmed) {
-                    console.log('User confirmed delete');
+                console.log('SweetAlert2 result:', result);
+                
+                if (result.value === true) {
+                    console.log('User confirmed delete, calling deleteLogRequest');
                     await deleteLogRequest(id);
                 } else {
                     console.log('User cancelled delete');
@@ -477,6 +445,7 @@
                 console.error('Error in delete modal:', error);
                 // Fallback to simple confirm
                 if (confirm('Are you sure you want to delete this test result?')) {
+                    console.log('Using fallback confirm, calling deleteLogRequest');
                     await deleteLogRequest(id);
                 }
             }
@@ -506,14 +475,11 @@
                     console.log('Delete successful');
                     if (typeof Swal !== 'undefined') {
                         Swal.fire({
-                            icon: 'success',
+                            type: 'success',
                             title: 'Test Result Deleted',
                             text: 'The test result has been permanently removed from the database.',
                             timer: 2500,
-                            showConfirmButton: false,
-                            customClass: {
-                                popup: 'success-notification'
-                            }
+                            showConfirmButton: false
                         });
                         setTimeout(() => location.reload(), 2600);
                     } else {
@@ -524,13 +490,10 @@
                     console.log('Delete failed');
                     if (typeof Swal !== 'undefined') {
                         Swal.fire({
-                            icon: 'error',
+                            type: 'error',
                             title: 'Failed to Delete',
                             text: data.message || 'There was an error deleting the test result. It may have already been removed.',
-                            confirmButtonText: 'Close',
-                            customClass: {
-                                popup: 'error-notification'
-                            }
+                            confirmButtonText: 'Close'
                         });
                     } else {
                         alert('Error: ' + (data.message || 'Error deleting log'));
@@ -540,7 +503,7 @@
                 console.error('Delete error:', error);
                 if (typeof Swal !== 'undefined') {
                     Swal.fire({
-                        icon: 'error',
+                        type: 'error',
                         title: 'Network Connection Error',
                         text: 'Unable to connect to the server. Please check your internet connection and try again.',
                         footer: `<small>Technical error: ${error.message}</small>`,
@@ -648,21 +611,17 @@
                     });
                 } else {
                     Swal.fire({
-                        icon: 'error',
+                        type: 'error',
                         title: 'Error!',
                         text: 'Could not load test details'
                     });
                 }
             } catch (error) {
                 Swal.fire({
-                    icon: 'error',
+                    type: 'error',
                     title: 'Network Connection Error',
                     text: 'Unable to connect to the server. Please check your internet connection and try again.',
-                    footer: `<small>Technical error: ${error.message}</small>`,
-                    confirmButtonText: 'Retry',
-                    customClass: {
-                        popup: 'error-notification'
-                    }
+                    confirmButtonText: 'Retry'
                 });
             }
         }
@@ -756,7 +715,7 @@
                         
                         if (updateResponse.ok) {
                             Swal.fire({
-                                icon: 'success',
+                                type: 'success',
                                 title: 'Test Result Updated',
                                 text: 'Your changes have been saved successfully.',
                                 timer: 2500,
@@ -769,7 +728,7 @@
                         } else {
                             const errorData = await updateResponse.json();
                             Swal.fire({
-                                icon: 'error',
+                                type: 'error',
                                 title: 'Failed to Update',
                                 text: errorData.message || 'There was an error saving your changes. Please try again.',
                                 confirmButtonText: 'Try Again',
@@ -781,21 +740,17 @@
                     }
                 } else {
                     Swal.fire({
-                        icon: 'error',
+                        type: 'error',
                         title: 'Error!',
                         text: 'Could not load log data'
                     });
                 }
             } catch (error) {
                 Swal.fire({
-                    icon: 'error',
+                    type: 'error',
                     title: 'Network Connection Error',
                     text: 'Unable to connect to the server. Please check your internet connection and try again.',
-                    footer: `<small>Technical error: ${error.message}</small>`,
-                    confirmButtonText: 'Retry',
-                    customClass: {
-                        popup: 'error-notification'
-                    }
+                    confirmButtonText: 'Retry'
                 });
             }
         }
