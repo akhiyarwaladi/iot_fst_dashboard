@@ -323,24 +323,6 @@ return [
             'icon' => 'fas fa-fw fa-microchip',
         ],
         
-        // IoT Devices
-        ['header' => 'OTHER IOT DEVICES'],
-        [
-            'text' => 'Other Devices',
-            'icon' => 'fas fa-fw fa-wifi',
-            'submenu' => [
-                [
-                    'text' => 'Temperature Sensors',
-                    'url' => 'admin/temperature',
-                    'icon' => 'fas fa-fw fa-thermometer-half',
-                ],
-                [
-                    'text' => 'Smart Switches',
-                    'url' => 'admin/switches',
-                    'icon' => 'fas fa-fw fa-toggle-on',
-                ],
-            ],
-        ],
         
         // System
         ['header' => 'SYSTEM'],
