@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'API Documentation - IoT FST Dashboard')
+@section('title', 'API Documentation - IoT Component Tester')
 
 @section('content_header')
     <div class="content-header">
@@ -352,7 +352,7 @@
                 </div>
                 <div class="card-body">
                     <div id="api-console" class="bg-dark text-light p-3 rounded" style="height: 300px; overflow-y: auto; font-family: monospace; font-size: 12px;">
-                        <div class="text-success">IoT FST API Testing Console Ready...</div>
+                        <div class="text-success">IoT Component Tester API Testing Console Ready...</div>
                         <div class="text-muted">Click "Test" buttons above to test endpoints</div>
                     </div>
                 </div>

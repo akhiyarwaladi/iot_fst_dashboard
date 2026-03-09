@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'System Settings - IoT FST Dashboard')
+@section('title', 'System Settings - IoT Component Tester')
 
 @section('content_header')
     <div class="content-header">
@@ -42,7 +42,7 @@
                                     <label for="app_name">
                                         <i class="fas fa-tag mr-1"></i>Application Name
                                     </label>
-                                    <input type="text" class="form-control" id="app_name" value="IoT FST Dashboard" placeholder="Enter application name">
+                                    <input type="text" class="form-control" id="app_name" value="IoT Component Tester" placeholder="Enter application name">
                                     <small class="form-text text-muted">Display name for the application</small>
                                 </div>
                             </div>
@@ -459,7 +459,7 @@
             const dataStr = JSON.stringify(settings, null, 2);
             const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
             
-            const exportFileDefaultName = 'iot-fst-settings-' + new Date().toISOString().split('T')[0] + '.json';
+            const exportFileDefaultName = 'iot-component-tester-settings-' + new Date().toISOString().split('T')[0] + '.json';
             
             const linkElement = document.createElement('a');
             linkElement.setAttribute('href', dataUri);

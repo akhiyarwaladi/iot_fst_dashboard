@@ -12,12 +12,12 @@ This directory contains all Laravel configuration files that control various asp
 **Key Settings**:
 ```php
 'title' => 'IoT Component Tester',
-'logo' => '<b>IoT</b> FST',
+'logo' => '<b>IoT</b> Component Tester',
 'classes_sidebar' => 'sidebar-light-primary elevation-1',  // Modern flat design
 ```
 
 **Important Configurations**:
-- **Branding**: Custom title and logo for IoT FST
+- **Branding**: Custom title and logo for IoT Component Tester
 - **Theme**: Light theme with minimal elevation for flat design
 - **Sidebar**: Light primary theme with modern styling
 - **Menu Structure**: Component tester navigation
@@ -146,7 +146,7 @@ The AdminLTE config has been customized for modern flat design:
 
 // Custom branding
 'title' => 'IoT Component Tester',
-'logo' => '<b>IoT</b> FST',
+'logo' => '<b>IoT</b> Component Tester',
 'logo_img_class' => 'brand-image img-circle elevation-1',
 ```
 

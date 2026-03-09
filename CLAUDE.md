@@ -93,7 +93,7 @@ Main entity: `log_testers`
 ## AdminLTE Configuration
 - **Version**: AdminLTE v3.15 (configured for v4 design patterns)
 - **Theme**: Light theme with minimal elevation
-- **Branding**: "IoT FST" with modern logo
+- **Branding**: "IoT Component Tester" with modern logo
 - **Sidebar**: Light primary with modern navigation
 - **Design**: Flat design with subtle shadows and gradients
 
