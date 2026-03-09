@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>IoT</b> FST',
+    'logo' => '<b>IoT</b> Component Tester',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-1',
     'logo_img_xl' => null,
@@ -339,19 +339,6 @@ return [
             'text' => 'Reports',
             'url' => 'admin/reports',
             'icon' => 'fas fa-fw fa-chart-bar',
-        ],
-        
-        // IoT Devices (Simple)
-        ['header' => 'IOT DEVICES'],
-        [
-            'text' => 'Temperature',
-            'url' => 'admin/temperature',
-            'icon' => 'fas fa-fw fa-thermometer-half',
-        ],
-        [
-            'text' => 'Smart Switches',
-            'url' => 'admin/switches',
-            'icon' => 'fas fa-fw fa-toggle-on',
         ],
         
         // System
